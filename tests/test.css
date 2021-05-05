@@ -1,0 +1,58 @@
+/**
+ * Default styles
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --background-color: #ddd;
+  --color: #222;
+}
+
+body {
+  background: var(--background-color);
+  color: var(--color);
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/**
+ * Drawer styles
+ */
+
+.drawer {
+  --drawer-background-color: #444;
+  --drawer-color: #fff;
+  --drawer-min-width: 240px;
+  background: var(--drawer-background-color);
+  bottom: 0;
+  color: var(--drawer-color);
+  height: 100vh;
+  min-width: var(--drawer-min-width);
+  padding: 2rem;
+  position: fixed;
+  right: 0;
+}
+
+.drawer[aria-expanded="false"] {
+  display: none;
+}
+
+.drawer-switch {
+  left: 1rem;
+  position: fixed;
+  top: 1rem;
+}
+
+.content {
+  padding: 2rem;
+}
