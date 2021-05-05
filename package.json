@@ -1,7 +1,6 @@
 {
   "name": "drawer",
   "version": "1.0.0",
-  "main": "index.js",
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.2.1",
     "rollup": "^2.46.0",
