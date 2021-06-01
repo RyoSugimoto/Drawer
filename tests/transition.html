@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./test.css">
   <title>Document</title>
 </head>
 <body>
@@ -15,8 +16,7 @@
 
 <div
   aria-hidden="true"
-  class="drawer"
-  id="drawer"
+  class="drawer--transition js-drawer"
   role="menu"
 >
   <nav class="drawer__navigation">
@@ -46,13 +46,11 @@
   <p>Nullam efficitur tortor sit amet quam venenatis euismod. Vivamus ac bibendum tellus. Aliquam sagittis convallis enim, sed tempor tortor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus molestie nulla sed neque efficitur, tempus tempus massa ullamcorper. Maecenas efficitur sapien vestibulum magna convallis eleifend eget ultricies dolor. Morbi malesuada erat vel orci fringilla commodo. In tincidunt pellentesque ipsum, ac feugiat neque laoreet eget.</p>
 </div>
 
-<link rel="stylesheet" href="./test.css">
 <script src="../dist/drawer.js"></script>
 <script>
 const drawer = new Drawer({
-  drawer: '#drawer',
+  drawer: '.js-drawer',
   switch: '#drawer-switch',
-  enableFixBackface: false,
 })
 </script>
 </body>

@@ -43,7 +43,7 @@ button {
   right: 0;
 }
 
-.drawer[aria-expanded="false"] {
+.drawer[aria-hidden="true"] {
   display: none;
 }
 
@@ -55,4 +55,24 @@ button {
 
 .content {
   padding: 2rem;
+}
+
+.drawer--transition {
+  --drawer-background-color: #444;
+  --drawer-color: #fff;
+  --drawer-min-width: 240px;
+  background: var(--drawer-background-color);
+  bottom: 0;
+  color: var(--drawer-color);
+  height: 100vh;
+  min-width: var(--drawer-min-width);
+  padding: 2rem;
+  position: fixed;
+  right: 0;
+  transform: translate3d(0, 0, 0);
+  transition: transform .2s ease-out 0s;
+}
+
+.drawer--transition[aria-hidden="true"] {
+  transform: translate3d(100%, 0, 0);
 }

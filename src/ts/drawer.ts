@@ -7,6 +7,8 @@ export default class Drawer {
   public isExpanded: boolean = false
   public enableFixBackface:boolean = true
   public enableHistory: boolean = false
+  public id: string = 'Drawer-' + new Date().getTime()
+
   constructor(args: {
     drawer: string
     switch?: string
@@ -21,6 +23,13 @@ export default class Drawer {
     this.drawerElement = document.querySelector(args.drawer)
     if (!this.drawerElement) throw new Error(`${this.constructor.name}: The Element for "drawer" is not found.`)
     this.drawerElement.setAttribute('aria-expanded', String(this.isExpanded))
+    this.drawerElement.setAttribute('data-drawer-is', 'initialized')
+    // console.log( this.id )
+    if (this.drawerElement.id) {
+      this.id = this.drawerElement.id
+    } else {
+      this.drawerElement.id = this.id
+    }
     this.isExpanded ? this.drawerElement.removeAttribute('inert') : this.drawerElement.setAttribute('inert', '')
 
     // Switches for toggle
@@ -29,6 +38,9 @@ export default class Drawer {
     if (this.switchElements) {
       this.switchElements.forEach(element => {
         element.addEventListener('click', this.toggle.bind(this))
+        element.setAttribute('data-drawer-is', 'initialized')
+        element.setAttribute('aria-hidden', String(!this.isExpanded))
+        element.setAttribute('aria-controls', this.id)
       })
     }
 
@@ -37,6 +49,7 @@ export default class Drawer {
       document.querySelectorAll(args.inert) : null
     if (this.inertElements) {
       this.inertElements.forEach(element => {
+        element.setAttribute('data-drawer-is', 'initialized')
         if (this.isExpanded) {
           element.setAttribute('inert', '')
         } else {
@@ -53,6 +66,8 @@ export default class Drawer {
       this.enableHistory = true
       window.addEventListener('popstate', this._popstateHandler.bind(this))
     }
+
+
   }
   toggle(event: Event) {
     event.preventDefault()
@@ -78,6 +93,17 @@ export default class Drawer {
       this.drawerElement?.setAttribute('inert', '')
       document.removeEventListener('keyup', this._keyupHandler.bind(this))
     }
+
+    if ( typeof fixBackface === 'function' && this.enableFixBackface ) fixBackface(isExpanded)
+
+    this.drawerElement?.setAttribute('aria-hidden', String(!isExpanded))
+
+    if (this.switchElements) {
+      this.switchElements.forEach(element => {
+        element.setAttribute('aria-expanded', String(isExpanded))
+      })
+    }
+
     if (this.inertElements) {
       this.inertElements.forEach(element => {
         if (isExpanded) {
@@ -87,8 +113,7 @@ export default class Drawer {
         }
       })
     }
-    if ( typeof fixBackface === 'function' && this.enableFixBackface ) fixBackface(isExpanded)
-    this.drawerElement?.setAttribute('aria-expanded', String(isExpanded))
+
     this.isExpanded = isExpanded
   }
   private _keyupHandler(event: KeyboardEvent) {
