@@ -25,6 +25,10 @@ button {
   cursor: pointer;
 }
 
+.content {
+  padding: 2rem;
+}
+
 /**
  * Drawer styles
  */
@@ -43,7 +47,7 @@ button {
   right: 0;
 }
 
-.drawer[aria-hidden="true"] {
+.drawer[hidden] {
   display: none;
 }
 
@@ -53,14 +57,11 @@ button {
   top: 1rem;
 }
 
-.content {
-  padding: 2rem;
-}
-
 .drawer--transition {
   --drawer-background-color: #444;
   --drawer-color: #fff;
   --drawer-min-width: 240px;
+  --drawer-display: block;
   background: var(--drawer-background-color);
   bottom: 0;
   color: var(--drawer-color);
@@ -73,6 +74,8 @@ button {
   transition: transform .2s ease-out 0s;
 }
 
-.drawer--transition[aria-hidden="true"] {
+.drawer--transition[hidden] {
+  display: var(--drawer-display, block);
   transform: translate3d(100%, 0, 0);
+  visibility: visible;
 }

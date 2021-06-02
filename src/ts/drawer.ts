@@ -1,5 +1,5 @@
 import fixBackface from './fix-backface.js'
-
+import "wicg-inert";
 export default class Drawer {
   public drawerElement: HTMLElement | null
   public switchElements?: NodeListOf<HTMLElement> | null
@@ -22,15 +22,19 @@ export default class Drawer {
     if (args.drawer === '' ) throw new Error(`${this.constructor.name}: The "drawer" parameter is empty.`)
     this.drawerElement = document.querySelector(args.drawer)
     if (!this.drawerElement) throw new Error(`${this.constructor.name}: The Element for "drawer" is not found.`)
-    this.drawerElement.setAttribute('aria-expanded', String(this.isExpanded))
-    this.drawerElement.setAttribute('data-drawer-is', 'initialized')
-    // console.log( this.id )
+    this.drawerElement.setAttribute('data-drawer-is-initialized', 'true')
     if (this.drawerElement.id) {
       this.id = this.drawerElement.id
     } else {
       this.drawerElement.id = this.id
     }
-    this.isExpanded ? this.drawerElement.removeAttribute('inert') : this.drawerElement.setAttribute('inert', '')
+    if (this.isExpanded) {
+      this.drawerElement.removeAttribute('inert')
+      this.drawerElement.removeAttribute('hidden')
+    } else {
+      this.drawerElement.setAttribute('inert', '')
+      this.drawerElement.setAttribute('hidden', '')
+    }
 
     // Switches for toggle
     this.switchElements = typeof args.switch === 'string' ?
@@ -39,7 +43,6 @@ export default class Drawer {
       this.switchElements.forEach(element => {
         element.addEventListener('click', this.toggle.bind(this))
         element.setAttribute('data-drawer-is', 'initialized')
-        element.setAttribute('aria-hidden', String(!this.isExpanded))
         element.setAttribute('aria-controls', this.id)
       })
     }
@@ -67,7 +70,6 @@ export default class Drawer {
       window.addEventListener('popstate', this._popstateHandler.bind(this))
     }
 
-
   }
   toggle(event: Event) {
     event.preventDefault()
@@ -88,15 +90,17 @@ export default class Drawer {
   private _changeState(isExpanded: boolean) {
     if (isExpanded) {
       this.drawerElement?.removeAttribute('inert')
+      this.drawerElement?.removeAttribute('hidden')
       document.addEventListener('keyup', this._keyupHandler.bind(this))
+
     } else {
+      // When the drawer is hidden
       this.drawerElement?.setAttribute('inert', '')
+      this.drawerElement?.setAttribute('hidden', '')
       document.removeEventListener('keyup', this._keyupHandler.bind(this))
     }
 
     if ( typeof fixBackface === 'function' && this.enableFixBackface ) fixBackface(isExpanded)
-
-    this.drawerElement?.setAttribute('aria-hidden', String(!isExpanded))
 
     if (this.switchElements) {
       this.switchElements.forEach(element => {
