@@ -22,6 +22,34 @@ export default [
         ]
       },
     ],
+    external: ['wicg-inert'],
+    plugins: [
+      typescript(),
+      pluginBabel({
+        extensions: ['.js', '.ts'],
+        babelHelpers: 'bundled',
+        configFile: path.resolve(__dirname, 'babel.config.json'),
+      }),
+    ]
+  },
+  {
+    input: './src/ts/drawer.ts',
+    output: [
+      {
+        name: 'Drawer',
+        file: './dist/drawer.bundle.js',
+        format: 'iife',
+        sourcemap: 'inline',
+      },
+      {
+        name: 'Drawer',
+        file: './dist/drawer.bundle.min.js',
+        format: 'iife',
+        plugins: [
+          pluginTerser()
+        ]
+      },
+    ],
     plugins: [
       typescript(),
       pluginBabel({
@@ -46,6 +74,7 @@ export default [
         babelHelpers: 'bundled',
         configFile: path.resolve(__dirname, 'babel.config.json'),
       }),
-    ]
+    ],
+    external: ['wicg-inert'],
   }
 ]

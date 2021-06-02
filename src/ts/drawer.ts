@@ -1,5 +1,5 @@
 import fixBackface from './fix-backface.js'
-import "wicg-inert";
+import 'wicg-inert';
 export default class Drawer {
   public drawerElement: HTMLElement | null
   public switchElements?: NodeListOf<HTMLElement> | null
