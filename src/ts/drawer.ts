@@ -42,7 +42,7 @@ export default class Drawer {
     if (this.switchElements) {
       this.switchElements.forEach(element => {
         element.addEventListener('click', this.toggle.bind(this))
-        element.setAttribute('data-drawer-is', 'initialized')
+        element.setAttribute('data-drawer-is-initialized', 'true')
         element.setAttribute('aria-controls', this.id)
       })
     }
