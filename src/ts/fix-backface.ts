@@ -10,9 +10,10 @@ const styleForFixed: {
 
 const scrollingElement: Element = (() => {
   const ua = window.navigator.userAgent.toLowerCase()
+  const d:Document = document
   if ('scrollingElement' in document) return document.scrollingElement!
-  if (ua.indexOf('webkit') > 0) return document.body!
-  return document.documentElement!
+  if (ua.indexOf('webkit') > 0) return d.body!
+  return d.documentElement!
 })()!
 
 export default function fixBackface(fixed: boolean) {
